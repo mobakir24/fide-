@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fide — Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+
+    <div class="login-card">
+        <div class="login-header">
+            <h2>Welcome Back!</h2>
+            <p>Please select your account type to continue</p>
+        </div>
+
+        <div class="user-selector">
+            <button class="type-btn active" id="childBtn" onclick="selectType('child')">
+                <span class="icon">🧒</span>
+                <span>Child / Öğrenci</span>
+            </button>
+            <button class="type-btn" id="parentBtn" onclick="selectType('parent')">
+                <span class="icon">👨‍👩</span>
+                <span>Parent / Ebeveyn</span>
+            </button>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <label id="nameLabel">User Name</label>
+                <input type="text" id="username" placeholder="Enter your name" required>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">Login 🚀</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

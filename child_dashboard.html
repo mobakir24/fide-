@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fide — Çocuk Paneli</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+    <nav class="dash-nav">
+        <div class="logo">🌱 fide</div>
+        <div class="user-stats">
+            <div class="stat-item">🔥 <span id="streakCount">1</span> Days</div>
+            <div class="stat-item">⭐ <span id="xpCount">0</span> XP</div>
+            <div class="user-welcome">Merhaba, <span id="childName">Gezgin</span>! 🦊</div>
+        </div>
+    </nav>
+
+    <main class="dash-container">
+        <section class="progress-section">
+            <h2>Your Financial Journey</h2>
+            <div class="progress-card">
+                <div class="progress-info">
+                    <span>Level 1 Trader</span>
+                    <span id="progressText">0% Completed</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="mainProgress" style="width: 0%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="lessons-section">
+            <h3 class="section-subtitle">Today's Missions & Lessons</h3>
+            <div class="lessons-grid">
+                
+                <div class="lesson-card p-theme" id="lesson1">
+                    <div class="card-icon">💰</div>
+                    <h4>1. Tasarruf Nedir? (Saving)</h4>
+                    <p>Learn how to put money aside for your future dreams.</p>
+                    <button class="btn-action" onclick="completeLesson(1, 25)">Start +25 XP</button>
+                </div>
+
+                <div class="lesson-card acc-theme" id="lesson2">
+                    <div class="card-icon">💼</div>
+                    <h4>2. Para Nasıl Kazanılır? (Earning)</h4>
+                    <p>Discover how value is created and how people earn money.</p>
+                    <button class="btn-action" onclick="completeLesson(2, 25)">Start +25 XP</button>
+                </div>
+
+                <div class="lesson-card orange-theme" id="lesson3">
+                    <div class="card-icon">🛒</div>
+                    <h4>3. Akıllı Harcama (Spending)</h4>
+                    <p>Wants vs. Needs. Make smart choices with your coins.</p>
+                    <button class="btn-action" onclick="completeLesson(3, 25)">Start +25 XP</button>
+                </div>
+
+                <div class="lesson-card blue-theme" id="lesson4">
+                    <div class="card-icon">📈</div>
+                    <h4>4. Yatırım Dünyası (Investing)</h4>
+                    <p>Make your money work for you! The basics of growing asset.</p>
+                    <button class="btn-action" onclick="completeLesson(4, 25)">Start +25 XP</button>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
