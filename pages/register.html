@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fide — Create Account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+  <style>
+    body {
+      background: var(--fide-hero-bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Navbar ─────────────────────────────────────────── */
+    .reg-navbar {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--cds-spacing-10);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .reg-navbar .logo { color: var(--white); }
+
+    .reg-navbar-right {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-05);
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .reg-navbar-right a {
+      color: var(--fide-teal);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ── Layout ─────────────────────────────────────────── */
+    .reg-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 48px);
+    }
+
+    /* ── Left Panel ─────────────────────────────────────── */
+    .reg-left {
+      padding: var(--cds-spacing-12) var(--cds-spacing-10);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .reg-left-tag {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--fide-teal);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: var(--cds-spacing-06);
+      padding-left: var(--cds-spacing-05);
+      border-left: 3px solid var(--fide-teal);
+    }
+
+    .reg-left h1 {
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: var(--cds-spacing-06);
+    }
+
+    .reg-left h1 strong {
+      font-weight: 600;
+      color: var(--fide-teal);
+    }
+
+    .reg-left p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      max-width: 400px;
+      margin-bottom: var(--cds-spacing-09);
+    }
+
+    .reg-features {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cds-spacing-05);
+    }
+
+    .reg-feature-item {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-04);
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+    }
+
+    .reg-feature-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(8,189,186,0.15);
+      border: 1px solid rgba(8,189,186,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ── Right Panel ─────────────────────────────────────── */
+    .reg-right {
+      background: var(--cds-background);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--cds-spacing-10) var(--cds-spacing-10);
+      overflow-y: auto;
+    }
+
+    .reg-form-wrap {
+      max-width: 440px;
+      width: 100%;
+    }
+
+    .reg-form-title {
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--cds-text-primary);
+      margin-bottom: var(--cds-spacing-02);
+    }
+
+    .reg-form-subtitle {
+      font-size: 14px;
+      color: var(--cds-text-secondary);
+      margin-bottom: var(--cds-spacing-08);
+    }
+
+    /* ── Step Indicator ─────────────────────────────────── */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: var(--cds-spacing-08);
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-03);
+      flex: 1;
+    }
+
+    .step-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--cds-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cds-text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    .step-circle.active {
+      border-color: var(--cds-interactive);
+      background: var(--cds-interactive);
+      color: var(--white);
+    }
+
+    .step-circle.done {
+      border-color: var(--fide-accent);
+      background: var(--fide-accent);
+      color: var(--white);
+    }
+
+    .step-label {
+      font-size: 12px;
+      color: var(--cds-text-secondary);
+      font-weight: 500;
+    }
+
+    .step-label.active { color: var(--cds-interactive); font-weight: 600; }
+
+    .step-line {
+      height: 1px;
+      background: var(--cds-border-subtle);
+      flex: 1;
+      margin: 0 var(--cds-spacing-03);
+    }
+
+    /* ── Steps ───────────────────────────────────────────── */
+    .reg-step { display: none; }
+    .reg-step.active { display: block; }
+
+    /* ── Role Cards ─────────────────────────────────────── */
+    .role-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--cds-border-subtle);
+      border: 1px solid var(--cds-border-subtle);
+      margin-bottom: var(--cds-spacing-07);
+    }
+
+    .role-card {
+      background: var(--cds-background);
+      padding: var(--cds-spacing-07);
+      cursor: pointer;
+      transition: background 0.15s;
+      border: none;
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-align: left;
+      position: relative;
+    }
+
+    .role-card:hover { background: var(--cds-layer-01); }
+
+    .role-card.selected {
+      background: var(--cds-layer-01);
+      border-bottom: 2px solid var(--cds-interactive);
+    }
+
+    .role-card-icon { font-size: 28px; margin-bottom: var(--cds-spacing-04); display: block; }
+
+    .role-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--cds-text-primary);
+      margin-bottom: var(--cds-spacing-02);
+    }
+
+    .role-card-desc {
+      font-size: 12px;
+      color: var(--cds-text-secondary);
+      line-height: 1.5;
+    }
+
+    .role-card-check {
+      position: absolute;
+      top: var(--cds-spacing-04);
+      right: var(--cds-spacing-04);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--cds-interactive);
+      color: var(--white);
+      font-size: 11px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .role-card.selected .role-card-check { display: flex; }
+
+    /* ── Carbon Input ────────────────────────────────────── */
+    .cds-field {
+      margin-bottom: var(--cds-spacing-06);
+    }
+
+    .cds-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--cds-text-secondary);
+      margin-bottom: var(--cds-spacing-02);
+      letter-spacing: 0.3px;
+    }
+
+    .cds-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 var(--cds-spacing-05);
+      background: var(--cds-layer-01);
+      border: none;
+      border-bottom: 1px solid var(--cds-border-strong);
+      color: var(--cds-text-primary);
+      font-size: 14px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .cds-input:focus {
+      border-bottom: 2px solid var(--cds-interactive);
+      background: var(--cds-layer-02);
+    }
+
+    .cds-input::placeholder { color: var(--cds-text-placeholder); }
+
+    /* ── Age Groups ──────────────────────────────────────── */
+    .age-groups {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--cds-border-subtle);
+      border: 1px solid var(--cds-border-subtle);
+      margin-bottom: var(--cds-spacing-07);
+    }
+
+    .age-group-btn {
+      background: var(--cds-background);
+      padding: var(--cds-spacing-05) var(--cds-spacing-06);
+      cursor: pointer;
+      transition: background 0.15s;
+      border: none;
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: var(--cds-spacing-01);
+    }
+
+    .age-group-btn:hover { background: var(--cds-layer-01); }
+
+    .age-group-btn.selected {
+      background: var(--cds-layer-01);
+      border-bottom: 2px solid var(--cds-interactive);
+    }
+
+    .age-group-range {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--cds-text-primary);
+    }
+
+    .age-group-label {
+      font-size: 12px;
+      color: var(--cds-text-secondary);
+    }
+
+    /* ── Buttons ─────────────────────────────────────────── */
+    .btn-reg-next {
+      width: 100%;
+      height: 48px;
+      background: var(--cds-interactive);
+      color: var(--white);
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'IBM Plex Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--cds-spacing-06);
+      margin-top: var(--cds-spacing-06);
+    }
+
+    .btn-reg-next:hover { background: var(--cds-interactive-hover); }
+
+    .btn-reg-back {
+      width: 100%;
+      height: 48px;
+      background: var(--cds-layer-01);
+      color: var(--cds-text-primary);
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'IBM Plex Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: var(--cds-spacing-03);
+    }
+
+    .btn-reg-back:hover { background: var(--cds-layer-hover-01); }
+
+    /* ── Error ───────────────────────────────────────────── */
+    .reg-error {
+      color: var(--cds-support-error);
+      font-size: 12px;
+      font-weight: 500;
+      padding: var(--cds-spacing-04);
+      background: #fff1f1;
+      border-left: 3px solid var(--cds-support-error);
+      margin-top: var(--cds-spacing-04);
+      display: none;
+    }
+
+    /* ── Success ─────────────────────────────────────────── */
+    .success-screen {
+      text-align: center;
+      padding: var(--cds-spacing-08) 0;
+    }
+
+    .success-icon {
+      font-size: 64px;
+      margin-bottom: var(--cds-spacing-06);
+    }
+
+    .success-screen h3 {
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--cds-text-primary);
+      margin-bottom: var(--cds-spacing-03);
+    }
+
+    .success-screen h3 strong { font-weight: 600; color: var(--fide-accent); }
+
+    .success-screen p {
+      font-size: 15px;
+      color: var(--cds-text-secondary);
+      margin-bottom: var(--cds-spacing-07);
+    }
+
+    .btn-go-dashboard {
+      width: 100%;
+      height: 52px;
+      background: var(--fide-accent);
+      color: var(--white);
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'IBM Plex Sans', sans-serif;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--cds-spacing-07);
+      text-decoration: none;
+    }
+
+    .btn-go-dashboard:hover { opacity: 0.9; }
+
+    /* ── Divider ─────────────────────────────────────────── */
+    .reg-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-05);
+      margin: var(--cds-spacing-06) 0;
+    }
+
+    .reg-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--cds-border-subtle);
+    }
+
+    .reg-divider-text {
+      font-size: 12px;
+      color: var(--cds-text-secondary);
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .reg-layout { grid-template-columns: 1fr; }
+      .reg-left   { display: none; }
+      .reg-right  { padding: var(--cds-spacing-08) var(--cds-spacing-06); }
+      .reg-navbar { padding: 0 var(--cds-spacing-06); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ──────────────────────────────────────────── -->
+  <nav class="reg-navbar">
+    <div class="logo">FİDE</div>
+    <div class="reg-navbar-right">
+      Already have an account?
+      <a href="login.html">Sign in →</a>
+    </div>
+  </nav>
+
+  <!-- ── Layout ──────────────────────────────────────────── -->
+  <div class="reg-layout">
+
+    <!-- Left Panel -->
+    <div class="reg-left">
+      <div class="reg-left-tag">Join Fide Today</div>
+      <h1>Build smart<br>money habits<br><strong>for life.</strong></h1>
+      <p>Create your free account and start learning financial skills through fun, gamified lessons designed for kids and teens.</p>
+      <div class="reg-features">
+        <div class="reg-feature-item">
+          <div class="reg-feature-icon">🎮</div>
+          <span>15 lessons across 5 financial topics</span>
+        </div>
+        <div class="reg-feature-item">
+          <div class="reg-feature-icon">⭐</div>
+          <span>Earn XP points as you complete lessons</span>
+        </div>
+        <div class="reg-feature-item">
+          <div class="reg-feature-icon">👨‍👩‍👧</div>
+          <span>Parents can track progress in real time</span>
+        </div>
+        <div class="reg-feature-item">
+          <div class="reg-feature-icon">🤖</div>
+          <span>AI assistant to answer your questions</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="reg-right">
+      <div class="reg-form-wrap">
+
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+          <div class="step-item">
+            <div class="step-circle active" id="circle-1">1</div>
+            <span class="step-label active" id="label-1">Role</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item">
+            <div class="step-circle" id="circle-2">2</div>
+            <span class="step-label" id="label-2">Details</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item">
+            <div class="step-circle" id="circle-3">3</div>
+            <span class="step-label" id="label-3">Done!</span>
+          </div>
+        </div>
+
+        <!-- ── Step 1: Role ─────────────────────────────── -->
+        <div class="reg-step active" id="step-1">
+          <h2 class="reg-form-title">Create your account</h2>
+          <p class="reg-form-subtitle">First, tell us who you are</p>
+
+          <div class="role-cards">
+            <button class="role-card" id="role-child" onclick="selectRole('child')">
+              <span class="role-card-icon">🧒</span>
+              <div class="role-card-title">I'm a Child</div>
+              <div class="role-card-desc">I want to learn about money and earn XP</div>
+              <div class="role-card-check">✓</div>
+            </button>
+            <button class="role-card" id="role-parent" onclick="selectRole('parent')">
+              <span class="role-card-icon">👨‍👩‍👧</span>
+              <div class="role-card-title">I'm a Parent</div>
+              <div class="role-card-desc">I want to track my child's learning progress</div>
+              <div class="role-card-check">✓</div>
+            </button>
+          </div>
+
+          <button class="btn-reg-next" onclick="goToStep2()">
+            <span>Continue</span>
+            <span>→</span>
+          </button>
+          <div class="reg-error" id="error-1">Please select your role to continue.</div>
+
+          <div class="reg-divider">
+            <div class="reg-divider-line"></div>
+            <span class="reg-divider-text">already have an account?</span>
+            <div class="reg-divider-line"></div>
+          </div>
+          <a href="login.html" style="
+            display: flex; align-items: center; justify-content: center;
+            height: 48px; background: var(--cds-layer-01);
+            color: var(--cds-text-primary); text-decoration: none;
+            font-size: 14px; font-weight: 500;
+            font-family: 'IBM Plex Sans', sans-serif;
+            transition: background 0.15s;
+          ">Sign in to existing account</a>
+        </div>
+
+        <!-- ── Step 2: Details ──────────────────────────── -->
+        <div class="reg-step" id="step-2">
+          <h2 class="reg-form-title" id="step2-title">Enter your details</h2>
+          <p class="reg-form-subtitle" id="step2-subtitle">Fill in your information to get started</p>
+
+          <div class="cds-field">
+            <label class="cds-label">Full Name</label>
+            <input class="cds-input" type="text" id="reg-name" placeholder="Enter your name" autocomplete="off">
+          </div>
+
+          <!-- Age group — only for child -->
+          <div id="age-group-section" style="display:none;">
+            <label class="cds-label" style="margin-bottom: var(--cds-spacing-04); display:block;">
+              Your Age Group
+            </label>
+            <div class="age-groups">
+              <button class="age-group-btn" onclick="selectAge(this, '7-9')">
+                <span class="age-group-range">7 – 9</span>
+                <span class="age-group-label">Early Learner</span>
+              </button>
+              <button class="age-group-btn" onclick="selectAge(this, '9-12')">
+                <span class="age-group-range">9 – 12</span>
+                <span class="age-group-label">Growing Saver</span>
+              </button>
+              <button class="age-group-btn" onclick="selectAge(this, '12-16')">
+                <span class="age-group-range">12 – 16</span>
+                <span class="age-group-label">Smart Spender</span>
+              </button>
+              <button class="age-group-btn" onclick="selectAge(this, '16-18')">
+                <span class="age-group-range">16 – 18</span>
+                <span class="age-group-label">Future Investor</span>
+              </button>
+            </div>
+          </div>
+
+          <button class="btn-reg-next" onclick="goToStep3()">
+            <span>Create Account</span>
+            <span>→</span>
+          </button>
+          <div class="reg-error" id="error-2"></div>
+          <button class="btn-reg-back" onclick="goToStep1()">← Back</button>
+        </div>
+
+        <!-- ── Step 3: Success ──────────────────────────── -->
+        <div class="reg-step" id="step-3">
+          <div class="success-screen">
+            <div class="success-icon">🎉</div>
+            <h3>Welcome to <strong>Fide!</strong></h3>
+            <p id="success-msg">Your account has been created. Start learning and earning XP!</p>
+            <a href="#" class="btn-go-dashboard" id="dashboardBtn">
+              <span>Go to Dashboard →</span>
+              <span>⭐</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── State ──────────────────────────────────────────────
+    let selectedRole = null;
+    let selectedAge  = null;
+
+    // ── Select Role ────────────────────────────────────────
+    function selectRole(role) {
+      selectedRole = role;
+      document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+      document.getElementById(`role-${role}`).classList.add('selected');
+      document.getElementById('error-1').style.display = 'none';
+
+      // Show/hide age section preview
+      if (role === 'child') {
+        document.getElementById('step2-title').innerText    = 'Tell us about yourself';
+        document.getElementById('step2-subtitle').innerText = 'We\'ll personalize your learning experience';
+      } else {
+        document.getElementById('step2-title').innerText    = 'Parent details';
+        document.getElementById('step2-subtitle').innerText = 'Create your guardian account';
+      }
+    }
+
+    // ── Select Age ─────────────────────────────────────────
+    function selectAge(btn, age) {
+      selectedAge = age;
+      document.querySelectorAll('.age-group-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    // ── Step Navigation ────────────────────────────────────
+    function goToStep2() {
+      if (!selectedRole) {
+        document.getElementById('error-1').style.display = 'block';
+        return;
+      }
+
+      // Show age section only for child
+      document.getElementById('age-group-section').style.display =
+        selectedRole === 'child' ? 'block' : 'none';
+
+      showStep(2);
+    }
+
+    function goToStep1() { showStep(1); }
+
+    function goToStep3() {
+      const name = document.getElementById('reg-name').value.trim();
+      const errorEl = document.getElementById('error-2');
+
+      // Validate name
+      if (!name) {
+        errorEl.innerText       = 'Please enter your name.';
+        errorEl.style.display   = 'block';
+        return;
+      }
+
+      // Validate age for child
+      if (selectedRole === 'child' && !selectedAge) {
+        errorEl.innerText       = 'Please select your age group.';
+        errorEl.style.display   = 'block';
+        return;
+      }
+
+      errorEl.style.display = 'none';
+
+      // Save to localStorage
+      localStorage.setItem('userName', name);
+      localStorage.setItem('userType', selectedRole);
+      if (selectedAge) localStorage.setItem('ageGroup', selectedAge);
+
+      // Update success message
+      document.getElementById('success-msg').innerText =
+        `Welcome, ${name}! Your ${selectedRole} account is ready. Start your financial journey now!`;
+
+      // Set dashboard link
+      const dashLink = selectedRole === 'child'
+        ? 'child-dashboard.html'
+        : 'parent-dashboard.html';
+      document.getElementById('dashboardBtn').href = dashLink;
+
+      showStep(3);
+    }
+
+    // ── Show Step ──────────────────────────────────────────
+    function showStep(num) {
+      // Hide all steps
+      document.querySelectorAll('.reg-step').forEach(s => s.classList.remove('active'));
+      document.getElementById(`step-${num}`).classList.add('active');
+
+      // Update step indicator
+      for (let i = 1; i <= 3; i++) {
+        const circle = document.getElementById(`circle-${i}`);
+        const label  = document.getElementById(`label-${i}`);
+
+        if (i < num) {
+          circle.className = 'step-circle done';
+          circle.innerText = '✓';
+          label.className  = 'step-label';
+        } else if (i === num) {
+          circle.className = 'step-circle active';
+          circle.innerText = i;
+          label.className  = 'step-label active';
+        } else {
+          circle.className = 'step-circle';
+          circle.innerText = i;
+          label.className  = 'step-label';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
