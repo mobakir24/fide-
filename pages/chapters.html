@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fide — Chapters</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+  <style>
+    body { background: var(--cds-layer-01); min-height: 100vh; }
+
+    /* ── Header ─────────────────────────────────────────── */
+    .dash-header {
+      background: var(--fide-hero-bg);
+      padding: 0 var(--cds-spacing-10);
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .dash-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 3px;
+    }
+
+    .dash-header-right {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-06);
+    }
+
+    .dash-stat-pill {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-02);
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      font-weight: 500;
+      background: rgba(255,255,255,0.08);
+      padding: 4px var(--cds-spacing-04);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .dash-welcome {
+      color: var(--fide-teal);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .btn-back {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      padding: 4px var(--cds-spacing-04);
+      cursor: pointer;
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .btn-back:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+    }
+
+    /* ── Banner ─────────────────────────────────────────── */
+    .chapters-banner {
+      background: linear-gradient(120deg, var(--fide-hero-bg) 0%, var(--fide-hero-bg-2) 100%);
+      padding: var(--cds-spacing-09) var(--cds-spacing-10);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .chapters-banner-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chapters-banner h1 {
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: var(--cds-spacing-02);
+    }
+
+    .chapters-banner h1 strong {
+      font-weight: 600;
+      color: var(--fide-teal);
+    }
+
+    .chapters-banner p {
+      color: rgba(255,255,255,0.65);
+      font-size: 15px;
+      margin: 0;
+    }
+
+    .banner-xp {
+      text-align: right;
+    }
+
+    .banner-xp-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .banner-xp-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 42px;
+      font-weight: 300;
+      color: var(--fide-teal);
+    }
+
+    /* ── Main ───────────────────────────────────────────── */
+    .chapters-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--cds-spacing-08) var(--cds-spacing-10);
+    }
+
+    /* ── Progress Overview ──────────────────────────────── */
+    .progress-overview {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--cds-border-subtle);
+      border: 1px solid var(--cds-border-subtle);
+      margin-bottom: var(--cds-spacing-08);
+    }
+
+    .progress-item {
+      background: var(--cds-background);
+      padding: var(--cds-spacing-05) var(--cds-spacing-06);
+      display: flex;
+      flex-direction: column;
+      gap: var(--cds-spacing-02);
+    }
+
+    .progress-item-label {
+      font-size: 11px;
+      color: var(--cds-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    .progress-item-bar {
+      height: 3px;
+      background: var(--cds-layer-01);
+      margin-top: 4px;
+    }
+
+    .progress-item-fill {
+      height: 100%;
+      background: var(--cds-interactive);
+      transition: width 0.6s ease;
+    }
+
+    .progress-item-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cds-text-primary);
+    }
+
+    /* ── Section Title ──────────────────────────────────── */
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--cds-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding-left: var(--cds-spacing-05);
+      border-left: 3px solid var(--cds-interactive);
+      margin-bottom: var(--cds-spacing-07);
+    }
+
+    /* ── Chapter Card ───────────────────────────────────── */
+    .chapters-grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cds-spacing-07);
+      margin-bottom: var(--cds-spacing-08);
+    }
+
+    .chapter-card {
+      background: var(--cds-background);
+      border: 1px solid var(--cds-border-subtle);
+      overflow: hidden;
+    }
+
+    .chapter-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--cds-spacing-07) var(--cds-spacing-08);
+      border-bottom: 1px solid var(--cds-border-subtle);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .chapter-header:hover { background: var(--cds-layer-01); }
+
+    .chapter-header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-06);
+    }
+
+    .chapter-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .chapter-icon.c-blue   { background: #e8f4ff; }
+    .chapter-icon.c-teal   { background: #e0f5f5; }
+    .chapter-icon.c-orange { background: #fff3e0; }
+    .chapter-icon.c-green  { background: #e8f5e9; }
+    .chapter-icon.c-purple { background: #f3e5f5; }
+
+    .chapter-info h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--cds-text-primary);
+      margin-bottom: 4px;
+    }
+
+    .chapter-info p {
+      font-size: 13px;
+      color: var(--cds-text-secondary);
+      margin: 0;
+    }
+
+    .chapter-header-right {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-06);
+      flex-shrink: 0;
+    }
+
+    .chapter-progress-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--cds-text-secondary);
+    }
+
+    .chapter-xp {
+      font-size: 12px;
+      color: var(--fide-teal);
+      font-weight: 600;
+      background: rgba(8,189,186,0.1);
+      border: 1px solid rgba(8,189,186,0.2);
+      padding: 4px var(--cds-spacing-04);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .chapter-toggle {
+      font-size: 18px;
+      color: var(--cds-text-secondary);
+      transition: transform 0.3s;
+    }
+
+    .chapter-toggle.open { transform: rotate(180deg); }
+
+    /* ── Lessons List ───────────────────────────────────── */
+    .lessons-list {
+      display: none;
+    }
+
+    .lessons-list.open { display: block; }
+
+    .lesson-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--cds-spacing-05) var(--cds-spacing-08);
+      border-bottom: 1px solid var(--cds-border-subtle);
+      transition: background 0.15s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .lesson-row:last-child { border-bottom: none; }
+    .lesson-row:hover { background: var(--cds-layer-01); }
+
+    .lesson-row-left {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-05);
+    }
+
+    .lesson-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--cds-text-secondary);
+      width: 24px;
+    }
+
+    .lesson-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cds-border-strong);
+      flex-shrink: 0;
+    }
+
+    .lesson-dot.completed { background: var(--fide-accent); }
+    .lesson-dot.locked    { background: var(--cds-border-subtle); }
+
+    .lesson-row-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--cds-text-primary);
+    }
+
+    .lesson-row-desc {
+      font-size: 12px;
+      color: var(--cds-text-secondary);
+      margin-top: 2px;
+    }
+
+    .lesson-row-right {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-05);
+      flex-shrink: 0;
+    }
+
+    .lesson-xp-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--cds-interactive);
+      font-weight: 600;
+    }
+
+    .lesson-status-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px var(--cds-spacing-03);
+    }
+
+    .lesson-status-tag.done    { color: var(--fide-accent); background: #e8f5e9; }
+    .lesson-status-tag.start   { color: var(--white); background: var(--cds-interactive); }
+    .lesson-status-tag.locked  { color: var(--cds-text-secondary); background: var(--cds-layer-01); }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .dash-header      { padding: 0 var(--cds-spacing-06); }
+      .chapters-banner  { padding: var(--cds-spacing-07) var(--cds-spacing-06); }
+      .chapters-banner-inner { flex-direction: column; gap: 16px; }
+      .chapters-main    { padding: var(--cds-spacing-06); }
+      .progress-overview { grid-template-columns: repeat(2, 1fr); }
+      .chapter-header   { padding: var(--cds-spacing-05) var(--cds-spacing-06); }
+      .lesson-row       { padding: var(--cds-spacing-05) var(--cds-spacing-06); }
+      .chapter-xp       { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────────── -->
+  <header class="dash-header">
+    <div class="dash-logo">FİDE</div>
+    <div class="dash-header-right">
+      <div class="dash-stat-pill">⭐ <span id="totalXP">0</span> XP</div>
+      <div class="dash-welcome" id="headerName">Explorer</div>
+      <a href="../pages/child-dashboard.html" class="btn-back">← Dashboard</a>
+    </div>
+  </header>
+
+  <!-- ── Banner ──────────────────────────────────────────── -->
+  <div class="chapters-banner">
+    <div class="chapters-banner-inner">
+      <div>
+        <h1>Your Learning <strong>Chapters</strong></h1>
+        <p>Master financial skills one lesson at a time — earn XP as you grow!</p>
+      </div>
+      <div class="banner-xp">
+        <div class="banner-xp-label">Total XP</div>
+        <div class="banner-xp-value" id="bannerXP">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Main ────────────────────────────────────────────── -->
+  <main class="chapters-main">
+
+    <!-- Progress Overview -->
+    <div class="progress-overview" id="progressOverview">
+      <div class="progress-item">
+        <div class="progress-item-label">💰 Saving</div>
+        <div class="progress-item-value" id="prog-saving">0 / 3</div>
+        <div class="progress-item-bar"><div class="progress-item-fill" id="bar-saving" style="width:0%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-item-label">📈 Investing</div>
+        <div class="progress-item-value" id="prog-investing">0 / 3</div>
+        <div class="progress-item-bar"><div class="progress-item-fill" id="bar-investing" style="width:0%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-item-label">🛒 Spending</div>
+        <div class="progress-item-value" id="prog-spending">0 / 3</div>
+        <div class="progress-item-bar"><div class="progress-item-fill" id="bar-spending" style="width:0%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-item-label">💼 Earning</div>
+        <div class="progress-item-value" id="prog-earning">0 / 3</div>
+        <div class="progress-item-bar"><div class="progress-item-fill" id="bar-earning" style="width:0%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-item-label">🚀 Entrepreneurship</div>
+        <div class="progress-item-value" id="prog-entrepreneurship">0 / 3</div>
+        <div class="progress-item-bar"><div class="progress-item-fill" id="bar-entrepreneurship" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="section-label">All Chapters — 5 subjects · 15 lessons</div>
+
+    <!-- Chapters -->
+    <div class="chapters-grid">
+
+      <!-- 1. Saving -->
+      <div class="chapter-card">
+        <div class="chapter-header" onclick="toggleChapter('saving')">
+          <div class="chapter-header-left">
+            <div class="chapter-icon c-blue">💰</div>
+            <div class="chapter-info">
+              <h3>Saving</h3>
+              <p>Learn how to save money and build healthy financial habits</p>
+            </div>
+          </div>
+          <div class="chapter-header-right">
+            <span class="chapter-progress-text" id="cp-saving">0 / 3</span>
+            <span class="chapter-xp">+75 XP</span>
+            <span class="chapter-toggle" id="toggle-saving">▼</span>
+          </div>
+        </div>
+        <div class="lessons-list open" id="lessons-saving">
+          <a href="lessons/saving-1.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">01</span>
+              <span class="lesson-dot" id="dot-saving-1"></span>
+              <div>
+                <div class="lesson-row-title">What is Saving?</div>
+                <div class="lesson-row-desc">Understand why saving money is the foundation of financial success</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-saving-1">Start →</span>
+            </div>
+          </a>
+          <a href="lessons/saving-2.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">02</span>
+              <span class="lesson-dot" id="dot-saving-2"></span>
+              <div>
+                <div class="lesson-row-title">The Piggy Bank Rule</div>
+                <div class="lesson-row-desc">Learn the 50/30/20 rule to split your money wisely</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-saving-2">Start →</span>
+            </div>
+          </a>
+          <a href="lessons/saving-3.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">03</span>
+              <span class="lesson-dot" id="dot-saving-3"></span>
+              <div>
+                <div class="lesson-row-title">Setting Saving Goals</div>
+                <div class="lesson-row-desc">How to set a goal and work towards it step by step</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-saving-3">Start →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 2. Investing -->
+      <div class="chapter-card">
+        <div class="chapter-header" onclick="toggleChapter('investing')">
+          <div class="chapter-header-left">
+            <div class="chapter-icon c-teal">📈</div>
+            <div class="chapter-info">
+              <h3>Investing</h3>
+              <p>Make your money grow by putting it to work for you</p>
+            </div>
+          </div>
+          <div class="chapter-header-right">
+            <span class="chapter-progress-text" id="cp-investing">0 / 3</span>
+            <span class="chapter-xp">+75 XP</span>
+            <span class="chapter-toggle" id="toggle-investing">▼</span>
+          </div>
+        </div>
+        <div class="lessons-list" id="lessons-investing">
+          <a href="lessons/investing-1.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">01</span>
+              <span class="lesson-dot" id="dot-investing-1"></span>
+              <div>
+                <div class="lesson-row-title">What is Investing?</div>
+                <div class="lesson-row-desc">Learn how money can grow over time when invested wisely</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-investing-1">Start →</span>
+            </div>
+          </a>
+          <a href="lessons/investing-2.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">02</span>
+              <span class="lesson-dot" id="dot-investing-2"></span>
+              <div>
+                <div class="lesson-row-title">Stocks & Shares Basics</div>
+                <div class="lesson-row-desc">Understand what stocks are and how companies raise money</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-investing-2">Start →</span>
+            </div>
+          </a>
+          <a href="lessons/investing-3.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">03</span>
+              <span class="lesson-dot" id="dot-investing-3"></span>
+              <div>
+                <div class="lesson-row-title">Risk & Reward</div>
+                <div class="lesson-row-desc">Why higher risk can mean higher reward — and how to be smart</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-investing-3">Start →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 3. Smart Spending -->
+      <div class="chapter-card">
+        <div class="chapter-header" onclick="toggleChapter('spending')">
+          <div class="chapter-header-left">
+            <div class="chapter-icon c-orange">🛒</div>
+            <div class="chapter-info">
+              <h3>Smart Spending</h3>
+              <p>Learn to make smart choices with your money every day</p>
+            </div>
+          </div>
+          <div class="chapter-header-right">
+            <span class="chapter-progress-text" id="cp-spending">0 / 3</span>
+            <span class="chapter-xp">+75 XP</span>
+            <span class="chapter-toggle" id="toggle-spending">▼</span>
+          </div>
+        </div>
+        <div class="lessons-list" id="lessons-spending">
+          <a href="lessons/spending-1.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">01</span>
+              <span class="lesson-dot" id="dot-spending-1"></span>
+              <div>
+                <div class="lesson-row-title">Needs vs Wants</div>
+                <div class="lesson-row-desc">The most important rule of spending — what do you really need?</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-spending-1">Start →</span>
+            </div>
+          </a>
+          <a href="lessons/spending-2.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">02</span>
+              <span class="lesson-dot" id="dot-spending-2"></span>
+              <div>
+                <div class="lesson-row-title">Making a Budget</div>
+                <div class="lesson-row-desc">Plan your money before you spend it — budgeting basics</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-spending-2">Start →</span>
+            </div>
+          </a>
+          <a href="lessons/spending-3.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">03</span>
+              <span class="lesson-dot" id="dot-spending-3"></span>
+              <div>
+                <div class="lesson-row-title">Avoiding Money Traps</div>
+                <div class="lesson-row-desc">How ads and tricks try to make you spend more than you should</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-spending-3">Start →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4. Earning -->
+      <div class="chapter-card">
+        <div class="chapter-header" onclick="toggleChapter('earning')">
+          <div class="chapter-header-left">
+            <div class="chapter-icon c-green">💼</div>
+            <div class="chapter-info">
+              <h3>Earning Money</h3>
+              <p>Discover how value is created and how people earn money</p>
+            </div>
+          </div>
+          <div class="chapter-header-right">
+            <span class="chapter-progress-text" id="cp-earning">0 / 3</span>
+            <span class="chapter-xp">+75 XP</span>
+            <span class="chapter-toggle" id="toggle-earning">▼</span>
+          </div>
+        </div>
+        <div class="lessons-list" id="lessons-earning">
+          <a href="lessons/earning-1.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">01</span>
+              <span class="lesson-dot" id="dot-earning-1"></span>
+              <div>
+                <div class="lesson-row-title">How People Earn Money</div>
+                <div class="lesson-row-desc">Jobs, skills, and services — the different ways to earn</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-earning-1">Start →</span>
+            </div>
+          </a>
+          <a href="lessons/earning-2.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">02</span>
+              <span class="lesson-dot" id="dot-earning-2"></span>
+              <div>
+                <div class="lesson-row-title">Value & Skills</div>
+                <div class="lesson-row-desc">Why some skills earn more and how to build valuable ones</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-earning-2">Start →</span>
+            </div>
+          </a>
+          <a href="lessons/earning-3.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">03</span>
+              <span class="lesson-dot" id="dot-earning-3"></span>
+              <div>
+                <div class="lesson-row-title">Passive Income</div>
+                <div class="lesson-row-desc">Earn money while you sleep — what is passive income?</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-earning-3">Start →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 5. Entrepreneurship -->
+      <div class="chapter-card">
+        <div class="chapter-header" onclick="toggleChapter('entrepreneurship')">
+          <div class="chapter-header-left">
+            <div class="chapter-icon c-purple">🚀</div>
+            <div class="chapter-info">
+              <h3>Entrepreneurship</h3>
+              <p>Think like a business owner and build something of your own</p>
+            </div>
+          </div>
+          <div class="chapter-header-right">
+            <span class="chapter-progress-text" id="cp-entrepreneurship">0 / 3</span>
+            <span class="chapter-xp">+75 XP</span>
+            <span class="chapter-toggle" id="toggle-entrepreneurship">▼</span>
+          </div>
+        </div>
+        <div class="lessons-list" id="lessons-entrepreneurship">
+          <a href="lessons/entrepreneurship-1.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">01</span>
+              <span class="lesson-dot" id="dot-entrepreneurship-1"></span>
+              <div>
+                <div class="lesson-row-title">What is an Entrepreneur?</div>
+                <div class="lesson-row-desc">Meet the people who build businesses and solve problems</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-entrepreneurship-1">Start →</span>
+            </div>
+          </a>
+          <a href="lessons/entrepreneurship-2.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">02</span>
+              <span class="lesson-dot" id="dot-entrepreneurship-2"></span>
+              <div>
+                <div class="lesson-row-title">Your First Business Idea</div>
+                <div class="lesson-row-desc">How to find a problem and create a solution people will pay for</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-entrepreneurship-2">Start →</span>
+            </div>
+          </a>
+          <a href="lessons/entrepreneurship-3.html" class="lesson-row">
+            <div class="lesson-row-left">
+              <span class="lesson-num">03</span>
+              <span class="lesson-dot" id="dot-entrepreneurship-3"></span>
+              <div>
+                <div class="lesson-row-title">Marketing & Customers</div>
+                <div class="lesson-row-desc">How to tell people about your product and find your first customer</div>
+              </div>
+            </div>
+            <div class="lesson-row-right">
+              <span class="lesson-xp-tag">+25 XP</span>
+              <span class="lesson-status-tag start" id="tag-entrepreneurship-3">Start →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const CHAPTERS = ['saving','investing','spending','earning','entrepreneurship'];
+    const LESSONS_PER_CHAPTER = 3;
+
+    // ── Load user data ─────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      const name = localStorage.getItem('userName') || 'Explorer';
+      const xp   = localStorage.getItem('totalXP')  || 0;
+
+      document.getElementById('headerName').innerText = name;
+      document.getElementById('totalXP').innerText    = xp;
+      document.getElementById('bannerXP').innerText   = xp;
+
+      updateAllProgress();
+    });
+
+    // ── Toggle Chapter ─────────────────────────────────────
+    function toggleChapter(id) {
+      const list   = document.getElementById(`lessons-${id}`);
+      const toggle = document.getElementById(`toggle-${id}`);
+      const isOpen = list.classList.contains('open');
+
+      list.classList.toggle('open', !isOpen);
+      toggle.classList.toggle('open', !isOpen);
+    }
+
+    // ── Update Progress ────────────────────────────────────
+    function updateAllProgress() {
+      let totalXP = 0;
+
+      CHAPTERS.forEach(chapter => {
+        let done = 0;
+
+        for (let i = 1; i <= LESSONS_PER_CHAPTER; i++) {
+          const key       = `lesson-${chapter}-${i}`;
+          const completed = localStorage.getItem(key) === 'done';
+
+          if (completed) {
+            done++;
+            totalXP += 25;
+
+            // Update dot
+            const dot = document.getElementById(`dot-${chapter}-${i}`);
+            if (dot) dot.classList.add('completed');
+
+            // Update tag
+            const tag = document.getElementById(`tag-${chapter}-${i}`);
+            if (tag) {
+              tag.innerText = '✓ Done';
+              tag.classList.remove('start');
+              tag.classList.add('done');
+            }
+          }
+        }
+
+        // Update chapter progress
+        const cp  = document.getElementById(`cp-${chapter}`);
+        const bar = document.getElementById(`bar-${chapter}`);
+        const prog = document.getElementById(`prog-${chapter}`);
+
+        if (cp)   cp.innerText        = `${done} / ${LESSONS_PER_CHAPTER}`;
+        if (prog) prog.innerText      = `${done} / ${LESSONS_PER_CHAPTER}`;
+        if (bar)  bar.style.width     = `${(done / LESSONS_PER_CHAPTER) * 100}%`;
+      });
+
+      // Update XP
+      document.getElementById('totalXP').innerText  = totalXP;
+      document.getElementById('bannerXP').innerText = totalXP;
+      localStorage.setItem('totalXP', totalXP);
+    }
+  </script>
+</body>
+</html>

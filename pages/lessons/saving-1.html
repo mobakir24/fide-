@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fide — What is Saving?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/main.css">
+  <style>
+    body { background: var(--cds-layer-01); min-height: 100vh; }
+
+    /* ── Header ─────────────────────────────────────────── */
+    .lesson-header {
+      background: var(--fide-hero-bg);
+      padding: 0 var(--cds-spacing-10);
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .lesson-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 3px;
+    }
+
+    .btn-back {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      padding: 4px var(--cds-spacing-04);
+      cursor: pointer;
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .btn-back:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+    }
+
+    /* ── Lesson Banner ───────────────────────────────────── */
+    .lesson-banner {
+      background: linear-gradient(120deg, var(--fide-hero-bg) 0%, var(--fide-hero-bg-2) 100%);
+      padding: var(--cds-spacing-08) var(--cds-spacing-10);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .lesson-breadcrumb {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: var(--cds-spacing-04);
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-02);
+    }
+
+    .lesson-breadcrumb a {
+      color: var(--fide-teal);
+      text-decoration: none;
+    }
+
+    .lesson-banner h1 {
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: var(--cds-spacing-03);
+    }
+
+    .lesson-banner h1 strong { font-weight: 600; }
+
+    .lesson-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-06);
+      margin-top: var(--cds-spacing-04);
+    }
+
+    .lesson-meta-item {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lesson-xp-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fide-teal);
+      background: rgba(8,189,186,0.15);
+      border: 1px solid rgba(8,189,186,0.3);
+      padding: 4px var(--cds-spacing-05);
+    }
+
+    /* ── Lesson Body ─────────────────────────────────────── */
+    .lesson-body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--cds-spacing-09) var(--cds-spacing-10);
+    }
+
+    /* ── Content Sections ────────────────────────────────── */
+    .content-section {
+      background: var(--cds-background);
+      border: 1px solid var(--cds-border-subtle);
+      padding: var(--cds-spacing-08);
+      margin-bottom: var(--cds-spacing-06);
+    }
+
+    .content-section h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--cds-text-primary);
+      margin-bottom: var(--cds-spacing-05);
+      padding-bottom: var(--cds-spacing-04);
+      border-bottom: 2px solid var(--cds-interactive);
+      display: inline-block;
+    }
+
+    .content-section p {
+      font-size: 15px;
+      color: var(--cds-text-secondary);
+      line-height: 1.8;
+      margin-bottom: var(--cds-spacing-05);
+    }
+
+    .content-section p:last-child { margin-bottom: 0; }
+
+    /* ── Key Points ──────────────────────────────────────── */
+    .key-points {
+      background: var(--cds-layer-01);
+      border-left: 3px solid var(--cds-interactive);
+      padding: var(--cds-spacing-06);
+      margin: var(--cds-spacing-06) 0;
+    }
+
+    .key-points-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cds-interactive);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: var(--cds-spacing-04);
+    }
+
+    .key-point {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--cds-spacing-04);
+      margin-bottom: var(--cds-spacing-03);
+      font-size: 14px;
+      color: var(--cds-text-primary);
+    }
+
+    .key-point:last-child { margin-bottom: 0; }
+
+    .key-point-icon {
+      color: var(--cds-interactive);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── Example Box ─────────────────────────────────────── */
+    .example-box {
+      background: #e8f4ff;
+      border: 1px solid #b3d4f5;
+      padding: var(--cds-spacing-06);
+      margin: var(--cds-spacing-06) 0;
+    }
+
+    .example-box-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cds-interactive);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: var(--cds-spacing-03);
+    }
+
+    .example-box p {
+      font-size: 14px;
+      color: var(--cds-text-primary);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ── Fun Fact ─────────────────────────────────────────── */
+    .fun-fact {
+      background: rgba(8,189,186,0.08);
+      border: 1px solid rgba(8,189,186,0.25);
+      padding: var(--cds-spacing-06);
+      margin: var(--cds-spacing-06) 0;
+      display: flex;
+      gap: var(--cds-spacing-05);
+      align-items: flex-start;
+    }
+
+    .fun-fact-icon { font-size: 24px; flex-shrink: 0; }
+
+    .fun-fact-text {
+      font-size: 14px;
+      color: var(--cds-text-primary);
+      line-height: 1.7;
+    }
+
+    .fun-fact-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--fide-teal);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    /* ── Quiz Section ────────────────────────────────────── */
+    .quiz-section {
+      background: var(--cds-background);
+      border: 1px solid var(--cds-border-subtle);
+      border-top: 3px solid var(--cds-interactive);
+      padding: var(--cds-spacing-08);
+      margin-top: var(--cds-spacing-07);
+    }
+
+    .quiz-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--cds-text-primary);
+      margin-bottom: var(--cds-spacing-02);
+    }
+
+    .quiz-subtitle {
+      font-size: 13px;
+      color: var(--cds-text-secondary);
+      margin-bottom: var(--cds-spacing-07);
+    }
+
+    .quiz-question {
+      margin-bottom: var(--cds-spacing-07);
+    }
+
+    .quiz-q-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--cds-text-primary);
+      margin-bottom: var(--cds-spacing-05);
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cds-spacing-03);
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: var(--cds-spacing-04);
+      padding: var(--cds-spacing-04) var(--cds-spacing-05);
+      background: var(--cds-layer-01);
+      border: 1px solid var(--cds-border-subtle);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-size: 14px;
+      color: var(--cds-text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+      text-align: left;
+      width: 100%;
+    }
+
+    .quiz-option:hover { background: #e8f4ff; border-color: var(--cds-interactive); }
+    .quiz-option.correct { background: #defbe6; border-color: var(--fide-accent); color: var(--fide-accent); }
+    .quiz-option.wrong   { background: #fff1f1; border-color: var(--cds-support-error); color: var(--cds-support-error); }
+
+    .quiz-option-letter {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ── Quiz Feedback ───────────────────────────────────── */
+    .quiz-feedback {
+      margin-top: var(--cds-spacing-04);
+      padding: var(--cds-spacing-04) var(--cds-spacing-05);
+      font-size: 14px;
+      font-weight: 500;
+      display: none;
+    }
+
+    .quiz-feedback.correct { background: #defbe6; color: var(--fide-accent); border-left: 3px solid var(--fide-accent); }
+    .quiz-feedback.wrong   { background: #fff1f1; color: var(--cds-support-error); border-left: 3px solid var(--cds-support-error); }
+
+    /* ── Complete Button ─────────────────────────────────── */
+    .complete-section {
+      margin-top: var(--cds-spacing-07);
+      padding-top: var(--cds-spacing-07);
+      border-top: 1px solid var(--cds-border-subtle);
+    }
+
+    .btn-complete {
+      width: 100%;
+      height: 52px;
+      background: var(--cds-interactive);
+      color: var(--white);
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'IBM Plex Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--cds-spacing-07);
+    }
+
+    .btn-complete:hover   { background: var(--cds-interactive-hover); }
+    .btn-complete:disabled {
+      background: var(--cds-layer-01);
+      color: var(--cds-text-secondary);
+      cursor: not-allowed;
+    }
+
+    .btn-complete.done {
+      background: var(--fide-accent);
+      cursor: not-allowed;
+    }
+
+    /* ── Next Lesson ─────────────────────────────────────── */
+    .next-lesson {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--cds-background);
+      border: 1px solid var(--cds-border-subtle);
+      padding: var(--cds-spacing-06) var(--cds-spacing-07);
+      margin-top: var(--cds-spacing-06);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .next-lesson:hover { background: var(--cds-layer-01); }
+
+    .next-lesson-label {
+      font-size: 11px;
+      color: var(--cds-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .next-lesson-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--cds-text-primary);
+    }
+
+    .next-lesson-arrow {
+      font-size: 20px;
+      color: var(--cds-interactive);
+    }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .lesson-header { padding: 0 var(--cds-spacing-06); }
+      .lesson-banner { padding: var(--cds-spacing-07) var(--cds-spacing-06); }
+      .lesson-body   { padding: var(--cds-spacing-06); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────────── -->
+  <header class="lesson-header">
+    <div class="lesson-logo">FİDE</div>
+    <a href="../chapters.html" class="btn-back">← Back to Chapters</a>
+  </header>
+
+  <!-- ── Banner ──────────────────────────────────────────── -->
+  <div class="lesson-banner">
+    <div class="lesson-breadcrumb">
+      <a href="../chapters.html">Chapters</a>
+      <span>›</span>
+      <span>💰 Saving</span>
+      <span>›</span>
+      <span>Lesson 1</span>
+    </div>
+    <h1><strong>What is Saving?</strong></h1>
+    <div class="lesson-meta">
+      <div class="lesson-meta-item">📖 5 min read</div>
+      <div class="lesson-meta-item">🎯 3 quiz questions</div>
+      <div class="lesson-xp-badge">+25 XP</div>
+    </div>
+  </div>
+
+  <!-- ── Body ────────────────────────────────────────────── -->
+  <div class="lesson-body">
+
+    <!-- Section 1 -->
+    <div class="content-section">
+      <h2>What is Saving?</h2>
+      <p>Saving means keeping some of your money instead of spending all of it. Think of it like this — every time you get money, you put some of it in a safe place to use later.</p>
+      <p>Imagine you get 10 coins every week. If you spend all 10, at the end of the month you have 0. But if you save 3 coins every week, at the end of the month you have 12 coins saved — that's more than a whole week of coins!</p>
+
+      <div class="example-box">
+        <div class="example-box-title">💡 Real Life Example</div>
+        <p>Ahmed gets 20 TL every week from his parents. He spends 15 TL on snacks and saves 5 TL. After 4 weeks, he has saved 20 TL — enough to buy the book he really wanted!</p>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="content-section">
+      <h2>Why is Saving Important?</h2>
+      <p>Saving is one of the most powerful things you can do with money. Here is why:</p>
+
+      <div class="key-points">
+        <div class="key-points-title">Key Points</div>
+        <div class="key-point">
+          <span class="key-point-icon">→</span>
+          <span><strong>Buy bigger things:</strong> Some things cost more than you have right now. Saving lets you buy them later.</span>
+        </div>
+        <div class="key-point">
+          <span class="key-point-icon">→</span>
+          <span><strong>Handle emergencies:</strong> If something unexpected happens, your savings can help you.</span>
+        </div>
+        <div class="key-point">
+          <span class="key-point-icon">→</span>
+          <span><strong>Feel secure:</strong> Knowing you have money saved makes you feel safe and confident.</span>
+        </div>
+        <div class="key-point">
+          <span class="key-point-icon">→</span>
+          <span><strong>Reach your goals:</strong> Want a new bike? A game? Saving is the path to get there.</span>
+        </div>
+      </div>
+
+      <div class="fun-fact">
+        <div class="fun-fact-icon">🌱</div>
+        <div>
+          <div class="fun-fact-label">Fun Fact</div>
+          <div class="fun-fact-text">If you save just 1 TL every day, in one year you will have 365 TL! Small amounts add up to big amounts over time. This is called <strong>the power of consistency</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="content-section">
+      <h2>How to Start Saving</h2>
+      <p>Starting to save is simple. You don't need a lot of money — you just need a plan:</p>
+
+      <div class="key-points">
+        <div class="key-points-title">3 Simple Steps</div>
+        <div class="key-point">
+          <span class="key-point-icon">1.</span>
+          <span><strong>Decide how much to save</strong> — Even 10% of what you get is a great start. If you get 10 TL, save 1 TL.</span>
+        </div>
+        <div class="key-point">
+          <span class="key-point-icon">2.</span>
+          <span><strong>Put it away immediately</strong> — The moment you get money, save your portion before you spend anything.</span>
+        </div>
+        <div class="key-point">
+          <span class="key-point-icon">3.</span>
+          <span><strong>Don't touch it</strong> — Your savings are for your goal, not for everyday spending.</span>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-box-title">💡 Try This at Home</div>
+        <p>Get three jars or envelopes. Label them: <strong>Save</strong>, <strong>Spend</strong>, and <strong>Give</strong>. Every time you get money, put some in each one. This is called the "Three Jar Method" and it's used by smart people all over the world!</p>
+      </div>
+    </div>
+
+    <!-- Quiz -->
+    <div class="quiz-section">
+      <div class="quiz-title">Quick Quiz 🎯</div>
+      <div class="quiz-subtitle">Answer all 3 questions correctly to complete the lesson and earn your XP!</div>
+
+      <!-- Q1 -->
+      <div class="quiz-question">
+        <div class="quiz-q-text">1. What does saving money mean?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this, 1, false)">
+            <span class="quiz-option-letter">A</span>
+            <span>Spending all your money right away</span>
+          </button>
+          <button class="quiz-option" onclick="answer(this, 1, true)">
+            <span class="quiz-option-letter">B</span>
+            <span>Keeping some of your money to use later</span>
+          </button>
+          <button class="quiz-option" onclick="answer(this, 1, false)">
+            <span class="quiz-option-letter">C</span>
+            <span>Giving all your money to someone else</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="feedback-1"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-question">
+        <div class="quiz-q-text">2. Ahmed saves 5 TL every week. How much will he have after 4 weeks?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this, 2, false)">
+            <span class="quiz-option-letter">A</span>
+            <span>5 TL</span>
+          </button>
+          <button class="quiz-option" onclick="answer(this, 2, false)">
+            <span class="quiz-option-letter">B</span>
+            <span>10 TL</span>
+          </button>
+          <button class="quiz-option" onclick="answer(this, 2, true)">
+            <span class="quiz-option-letter">C</span>
+            <span>20 TL</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="feedback-2"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-question">
+        <div class="quiz-q-text">3. When is the best time to put your savings away?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="answer(this, 3, false)">
+            <span class="quiz-option-letter">A</span>
+            <span>After you finish spending everything else</span>
+          </button>
+          <button class="quiz-option" onclick="answer(this, 3, true)">
+            <span class="quiz-option-letter">B</span>
+            <span>Immediately when you receive money</span>
+          </button>
+          <button class="quiz-option" onclick="answer(this, 3, false)">
+            <span class="quiz-option-letter">C</span>
+            <span>Only when you have a lot of money</span>
+          </button>
+        </div>
+        <div class="quiz-feedback" id="feedback-3"></div>
+      </div>
+
+      <!-- Complete -->
+      <div class="complete-section">
+        <button class="btn-complete" id="completeBtn" onclick="completeLesson()" disabled>
+          <span>Answer all questions to unlock</span>
+          <span>🔒</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Next Lesson -->
+    <a href="saving-2.html" class="next-lesson">
+      <div>
+        <div class="next-lesson-label">Next Lesson</div>
+        <div class="next-lesson-title">💰 The Piggy Bank Rule</div>
+      </div>
+      <div class="next-lesson-arrow">→</div>
+    </a>
+
+  </div>
+
+  <script>
+    const LESSON_KEY = 'lesson-saving-1';
+    const XP_REWARD  = 25;
+
+    let answers    = { 1: null, 2: null, 3: null };
+    let totalRight = 0;
+
+    // ── Check if already completed ─────────────────────────
+    window.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem(LESSON_KEY) === 'done') {
+        const btn = document.getElementById('completeBtn');
+        btn.innerHTML = '<span>✓ Lesson Completed!</span><span>⭐ +25 XP</span>';
+        btn.classList.add('done');
+        btn.disabled = true;
+
+        // Lock all options
+        document.querySelectorAll('.quiz-option').forEach(o => {
+          o.disabled = true;
+          o.style.cursor = 'not-allowed';
+        });
+      }
+    });
+
+    // ── Answer handler ─────────────────────────────────────
+    function answer(btn, qNum, isCorrect) {
+      // Already answered
+      if (answers[qNum] !== null) return;
+
+      answers[qNum] = isCorrect;
+
+      // Disable all options for this question
+      const options = btn.closest('.quiz-options').querySelectorAll('.quiz-option');
+      options.forEach(o => { o.disabled = true; o.style.cursor = 'default'; });
+
+      // Style the clicked button
+      btn.classList.add(isCorrect ? 'correct' : 'wrong');
+
+      // Show feedback
+      const feedback = document.getElementById(`feedback-${qNum}`);
+      if (isCorrect) {
+        feedback.innerText  = '✓ Correct! Well done!';
+        feedback.className  = 'quiz-feedback correct';
+        totalRight++;
+      } else {
+        feedback.innerText = '✗ Not quite. The correct answer is highlighted above.';
+        feedback.className = 'quiz-feedback wrong';
+
+        // Highlight correct answer
+        options.forEach(o => {
+          if (o.getAttribute('onclick').includes('true')) {
+            o.classList.add('correct');
+          }
+        });
+      }
+      feedback.style.display = 'block';
+
+      // Check if all answered
+      checkAllAnswered();
+    }
+
+    // ── Check all answered ─────────────────────────────────
+    function checkAllAnswered() {
+      const allAnswered = Object.values(answers).every(a => a !== null);
+      if (!allAnswered) return;
+
+      const btn = document.getElementById('completeBtn');
+
+      if (totalRight === 3) {
+        btn.innerHTML = '<span>Complete Lesson & Earn +25 XP 🎉</span><span>→</span>';
+        btn.disabled  = false;
+      } else {
+        btn.innerHTML = `<span>You got ${totalRight}/3 correct — keep trying!</span><span>📖</span>`;
+        btn.disabled  = true;
+        btn.style.background = '#ff832b';
+      }
+    }
+
+    // ── Complete lesson ────────────────────────────────────
+    function completeLesson() {
+      // Save completion
+      localStorage.setItem(LESSON_KEY, 'done');
+
+      // Update XP
+      const currentXP = parseInt(localStorage.getItem('totalXP') || '0');
+      localStorage.setItem('totalXP', currentXP + XP_REWARD);
+
+      // Update button
+      const btn = document.getElementById('completeBtn');
+      btn.innerHTML = '<span>✓ Lesson Completed!</span><span>⭐ +25 XP earned!</span>';
+      btn.classList.add('done');
+      btn.disabled = true;
+
+      // Show toast
+      showToast();
+    }
+
+    // ── Toast ──────────────────────────────────────────────
+    function showToast() {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed; bottom: 32px; right: 32px;
+        background: var(--fide-hero-bg); color: white;
+        padding: 16px 24px; font-family: 'IBM Plex Sans', sans-serif;
+        font-size: 14px; font-weight: 500; z-index: 999;
+        border-left: 3px solid var(--fide-teal);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      `;
+      toast.innerHTML = '🎉 +25 XP earned! Great work!';
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+  </script>
+</body>
+</html>
