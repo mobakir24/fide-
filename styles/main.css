@@ -7,7 +7,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* ── 2. CSS Variables ─────────────────────────────────────── */
@@ -29,6 +28,7 @@
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* ── 4. Navbar ────────────────────────────────────────────── */
@@ -53,13 +53,15 @@ body {
   font-size: 24px;
   font-weight: bold;
   color: var(--primary-color);
+  text-decoration: none;
 }
 
 .nav-links a {
   text-decoration: none;
   color: var(--text-color);
-  margin-left: 20px;
+  margin-left: 24px;
   font-weight: 600;
+  font-size: 15px;
   transition: color 0.3s;
 }
 
@@ -71,15 +73,21 @@ body {
 .nav-links .btn-login {
   background-color: var(--primary-color);
   color: var(--white);
-  padding: 8px 18px;
+  padding: 10px 22px;
   border-radius: var(--radius-sm);
+  margin-left: 24px;
+}
+
+.nav-links .btn-login:hover {
+  opacity: 0.9;
+  color: var(--white);
 }
 
 /* ── 5. Hero Section ──────────────────────────────────────── */
 .hero {
   background: linear-gradient(135deg, #f1f3ff 0%, #e5e9ff 100%);
-  padding: 80px 10%;
-  min-height: 80vh;
+  padding: 100px 10%;
+  min-height: 85vh;
   display: flex;
   align-items: center;
 }
@@ -89,15 +97,29 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 40px;
+  gap: 60px;
 }
 
 .hero-text { flex: 1; }
 
-.hero-text h1 {
-  font-size: 42px;
-  line-height: 1.3;
+.hero-badge {
+  display: inline-block;
+  background: rgba(91, 110, 248, 0.1);
+  color: var(--primary-color);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
   margin-bottom: 20px;
+  border: 1px solid rgba(91, 110, 248, 0.2);
+}
+
+.hero-text h1 {
+  font-size: 52px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: var(--text-color);
 }
 
 .hero-text h1 span { color: var(--primary-color); }
@@ -105,19 +127,40 @@ body {
 .hero-text p {
   font-size: 18px;
   color: #52527a;
-  line-height: 1.6;
-  margin-bottom: 30px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 500px;
 }
 
 .hero-buttons {
   display: flex;
-  gap: 15px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.hero-avatar {
+.hero-trust {
+  display: flex;
+  gap: 20px;
+  margin-top: 24px;
+  font-size: 13px;
+  color: #52527a;
+  font-weight: 600;
+  flex-wrap: wrap;
+}
+
+/* ── 6. Hero Visual ───────────────────────────────────────── */
+.hero-visual {
   flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.hero-card-float {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .avatar-box {
@@ -127,6 +170,8 @@ body {
   border-radius: 50%;
   box-shadow: var(--shadow-md);
   animation: bounce 3s infinite ease-in-out;
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes bounce {
@@ -134,49 +179,289 @@ body {
   50%       { transform: translateY(-15px); }
 }
 
-/* ── 6. Features Section ──────────────────────────────────── */
-.features {
-  padding: 80px 10%;
-  background-color: var(--white);
+.float-card {
+  position: absolute;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.float-card span { font-size: 22px; }
+
+.float-card-title {
+  font-size: 11px;
+  color: #9698c4;
+  font-weight: 600;
+}
+
+.float-card-val {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-color);
+}
+
+.card-xp {
+  top: 0px;
+  left: -60px;
+  animation: floatY 3s ease-in-out infinite;
+}
+
+.card-lesson {
+  bottom: 0px;
+  right: -60px;
+  animation: floatY 3s ease-in-out infinite 1.5s;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* ── 7. Stats Section ─────────────────────────────────────── */
+.stats-section {
+  background: var(--primary-color);
+  padding: 60px 10%;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  text-align: center;
+}
+
+.stat-box { color: var(--white); }
+
+.stat-number {
+  font-size: 42px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+/* ── 8. Section Header ────────────────────────────────────── */
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-tag {
+  display: inline-block;
+  background: rgba(91, 110, 248, 0.1);
+  color: var(--primary-color);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .section-title {
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1.3;
+  color: var(--text-color);
   text-align: center;
-  font-size: 32px;
   margin-bottom: 50px;
-  position: relative;
 }
 
-.section-title::after {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 6px;
-  background-color: var(--accent-color);
-  margin: 10px auto 0;
-  border-radius: 10px;
+.section-title::after { display: none; }
+
+/* ── 9. Features Section ──────────────────────────────────── */
+.features {
+  padding: 100px 10%;
+  background-color: var(--white);
 }
 
 .features-grid {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
 }
 
-/* ── 7. Footer ────────────────────────────────────────────── */
+.feature-icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.icon-purple { background: rgba(91,  110, 248, 0.12); }
+.icon-green  { background: rgba(52,  211, 153, 0.12); }
+.icon-blue   { background: rgba(56,  189, 248, 0.12); }
+
+.feature-tag {
+  display: inline-block;
+  margin-top: 16px;
+  background: var(--bg-color);
+  color: var(--primary-color);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ── 10. How It Works ─────────────────────────────────────── */
+.how-section {
+  padding: 100px 10%;
+  background: var(--bg-color);
+}
+
+.steps-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.step-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 40px 28px;
+  text-align: center;
+  flex: 1;
+  max-width: 280px;
+  box-shadow: 0 4px 20px rgba(91, 110, 248, 0.06);
+  transition: transform 0.3s;
+}
+
+.step-card:hover { transform: translateY(-6px); }
+
+.step-number {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--primary-color);
+  background: rgba(91, 110, 248, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.step-icon {
+  font-size: 44px;
+  margin-bottom: 16px;
+}
+
+.step-card h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.step-card p {
+  font-size: 14px;
+  color: #6b6b99;
+  line-height: 1.6;
+}
+
+.step-divider {
+  font-size: 28px;
+  color: #c7cbf0;
+  flex-shrink: 0;
+}
+
+/* ── 11. CTA Section ──────────────────────────────────────── */
+.cta-section {
+  padding: 80px 10%;
+  background: var(--white);
+}
+
+.cta-box {
+  background: linear-gradient(135deg, #5B6EF8, #34d399);
+  border-radius: 32px;
+  padding: 80px 40px;
+  text-align: center;
+  color: var(--white);
+}
+
+.cta-emoji { font-size: 52px; margin-bottom: 20px; }
+
+.cta-box h2 {
+  font-size: 40px;
+  font-weight: 900;
+  margin-bottom: 14px;
+}
+
+.cta-box p {
+  font-size: 17px;
+  opacity: 0.9;
+  margin-bottom: 32px;
+}
+
+.cta-box .btn-primary {
+  background: var(--white);
+  color: var(--primary-color);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* ── 12. Footer ───────────────────────────────────────────── */
 .footer {
   background-color: var(--text-color);
   color: var(--white);
-  text-align: center;
-  padding: 30px;
-  font-size: 14px;
+  padding: 40px 10%;
 }
 
-/* ── 8. Scroll Fade Animation ─────────────────────────────── */
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-logo {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover { color: var(--white); }
+
+.footer-copy {
+  color: rgba(255,255,255,0.5);
+  font-size: 13px;
+}
+
+/* ── 13. Fade Animation ───────────────────────────────────── */
 .fade-in {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .fade-in.visible {
@@ -184,14 +469,19 @@ body {
   transform: translateY(0);
 }
 
-/* ── 9. Responsive ────────────────────────────────────────── */
+/* ── 14. Responsive ───────────────────────────────────────── */
 @media (max-width: 768px) {
-  .hero-container,
-  .features-grid {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero-buttons { justify-content: center; }
-  .nav-links    { display: none; }
+  .hero-container  { flex-direction: column; text-align: center; }
+  .hero-buttons    { justify-content: center; }
+  .hero-trust      { justify-content: center; }
+  .hero-text p     { max-width: 100%; }
+  .nav-links       { display: none; }
+  .stats-grid      { grid-template-columns: repeat(2, 1fr); }
+  .features-grid   { grid-template-columns: 1fr; }
+  .steps-grid      { flex-direction: column; }
+  .step-divider    { transform: rotate(90deg); }
+  .float-card      { display: none; }
+  .cta-box         { padding: 40px 20px; }
+  .cta-box h2      { font-size: 28px; }
+  .hero-text h1    { font-size: 36px; }
 }
