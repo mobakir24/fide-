@@ -107,10 +107,26 @@
     }
 
     .dash-banner-text p {
-      color: rgba(255,255,255,0.65);
-      font-size: 14px;
-      margin: 0;
+    color: rgba(255,255,255,0.65);
+    font-size: 14px;
+    margin: 0 0 var(--cds-spacing-05) 0;
     }
+
+    .btn-chapters {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--fide-teal);
+    color: #001141;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    transition: opacity 0.15s;
+    }
+
+    .btn-chapters:hover { opacity: 0.85; }
 
     /* ── XP Progress Bar ─────────────────────────────────── */
     .xp-section {
@@ -367,10 +383,13 @@
   <!-- ── Banner ──────────────────────────────────────────── -->
   <div class="dash-banner">
     <div class="dash-banner-inner">
-      <div class="dash-banner-text">
+    <div class="dash-banner-text">
         <h2>Your Financial <strong>Journey</strong></h2>
         <p>Level 1 Trader — Keep learning to level up!</p>
-      </div>
+        <a href="chapters.html" class="btn-chapters">
+            📚 Go to Learning Chapters →
+        </a>
+    </div>
       <div class="xp-section">
         <div class="xp-top">
           <div>
@@ -410,8 +429,10 @@
 
     <!-- Lessons -->
     <div class="dash-section-title">
-      <span>Today's Missions</span>
-      <span class="dash-section-tag">4 lessons available</span>
+    <span>Today's Missions</span>
+    <a href="chapters.html" class="dash-section-tag" style="text-decoration:none;">
+        View All Chapters →
+    </a>
     </div>
 
     <div class="lessons-grid">
