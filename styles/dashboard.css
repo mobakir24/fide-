@@ -1,0 +1,131 @@
+/* ============================================================
+   dashboard.css — Child and Parent dashboard styles
+   ============================================================ */
+
+/* ── 1. Dashboard Base ────────────────────────────────────── */
+.dashboard-body { background-color: #f0f3ff; }
+
+/* ── 2. Dashboard Navbar ──────────────────────────────────── */
+.dash-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background-color: var(--white);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.user-stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.stat-item {
+  background-color: #f1f3ff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.user-welcome {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* ── 3. Dashboard Container ───────────────────────────────── */
+.dash-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* ── 4. Progress Card ─────────────────────────────────────── */
+.progress-card {
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.progress-bar-bg {
+  background-color: #eef1f6;
+  height: 12px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+/* ── 5. Lessons Grid ──────────────────────────────────────── */
+.lessons-section  { margin-top: 40px; }
+
+.section-subtitle {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* ── 6. Lesson Cards ──────────────────────────────────────── */
+.lesson-card {
+  background-color: var(--white);
+  padding: 25px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  border-bottom: 5px solid #eee;
+  transition: transform 0.2s;
+}
+
+.lesson-card:hover  { transform: translateY(-3px); }
+
+.lesson-card .card-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.lesson-card h4 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.lesson-card p {
+  color: #6c757d;
+  font-size: 14px;
+  margin-bottom: 20px;
+  min-height: 40px;
+}
+
+/* ── 7. Card Themes ───────────────────────────────────────── */
+.p-theme      { border-color: var(--primary-color); }
+.acc-theme    { border-color: var(--accent-color); }
+.orange-theme { border-color: var(--orange-color); }
+.blue-theme   { border-color: #38bdf8; }
+
+/* ── 8. Responsive ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .lessons-grid { grid-template-columns: 1fr; }
+
+  .dash-nav {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
