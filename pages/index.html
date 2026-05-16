@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fide — Learn Money, Grow Your Future</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles/main.css">
   <link rel="stylesheet" href="../styles/components.css">
 </head>
@@ -13,12 +13,15 @@
 
   <!-- ── Navbar ──────────────────────────────────────────── -->
   <nav class="navbar" id="navbar">
-    <div class="logo">🌱 fide</div>
+    <div class="logo">FİDE</div>
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#how-it-works">How it works</a>
       <a href="#stats">Stats</a>
-      <a href="login.html" class="btn-login">Sign In</a>
+    </div>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-nav-login">Log in</a>
+      <a href="login.html" class="btn-nav-register">Register</a>
     </div>
   </nav>
 
@@ -27,67 +30,64 @@
     <div class="hero-container">
       <div class="hero-text fade-in">
         <div class="hero-badge">🏆 #1 Financial Literacy App for Kids</div>
-        <h1>Learn Money,<br><span>Grow Your Future!</span></h1>
+        <h1>Learn Money,<br><span>Grow Your<br>Future!</span></h1>
         <p>Fide helps children build real financial skills through fun, gamified lessons. Master saving, earning, spending, and investing — one mission at a time.</p>
         <div class="hero-buttons">
-          <a href="login.html" class="btn-primary">Start Learning Free 🚀</a>
-          <a href="#how-it-works" class="btn-secondary">See How It Works</a>
+          <a href="login.html" class="btn-primary">Start Free Trial →</a>
+          <a href="#features" class="btn-ghost">Explore Lessons</a>
         </div>
         <div class="hero-trust">
-          <span>✅ Free to use</span>
-          <span>✅ Safe for kids</span>
-          <span>✅ Parent approved</span>
+          <div class="trust-item">
+            <span class="trust-stars">★★★★★</span>
+            <span>5.0 Trusted by parents worldwide</span>
+          </div>
         </div>
       </div>
-      <div class="hero-visual fade-in">
-        <div class="hero-card-float">
-          <div class="float-card card-xp">
-            <span>⭐</span>
-            <div>
-              <div class="float-card-title">XP Earned</div>
-              <div class="float-card-val">+250 XP</div>
-            </div>
-          </div>
-          <div class="avatar-box">🦊✨</div>
-          <div class="float-card card-lesson">
-            <span>📚</span>
-            <div>
-              <div class="float-card-title">Lesson Done</div>
-              <div class="float-card-val">Saving 101</div>
-            </div>
+
+      <div class="hero-image-wrap fade-in">
+        <img src="../assets/images/hero_kid.jpg" alt="Kid learning finance" class="hero-img">
+        <div class="hero-float-card card-top">
+          <span>⭐</span>
+          <div>
+            <div class="float-label">XP Earned</div>
+            <div class="float-val">+250 XP</div>
           </div>
         </div>
+        <div class="hero-float-card card-bottom">
+          <span>📚</span>
+          <div>
+            <div class="float-label">Lesson Done</div>
+            <div class="float-val">Saving 101</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="hero-stats" id="stats">
+      <div class="hero-stat-text">
+        <p>Your trusted platform<br>for financial learning.</p>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">10K+</div>
+        <div class="hero-stat-label">Active Learners</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">4+</div>
+        <div class="hero-stat-label">Core Lessons</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">98%</div>
+        <div class="hero-stat-label">Parent Satisfaction</div>
       </div>
     </div>
   </header>
-
-  <!-- ── Stats ───────────────────────────────────────────── -->
-  <section id="stats" class="stats-section">
-    <div class="stats-grid">
-      <div class="stat-box fade-in">
-        <div class="stat-number">10K+</div>
-        <div class="stat-label">Active Learners</div>
-      </div>
-      <div class="stat-box fade-in">
-        <div class="stat-number">4</div>
-        <div class="stat-label">Core Lessons</div>
-      </div>
-      <div class="stat-box fade-in">
-        <div class="stat-number">98%</div>
-        <div class="stat-label">Parent Satisfaction</div>
-      </div>
-      <div class="stat-box fade-in">
-        <div class="stat-number">500K+</div>
-        <div class="stat-label">XP Points Earned</div>
-      </div>
-    </div>
-  </section>
 
   <!-- ── Features ────────────────────────────────────────── -->
   <section id="features" class="features">
     <div class="section-header fade-in">
       <div class="section-tag">Why Fide?</div>
-      <h2 class="section-title">Everything your child needs<br>to master money</h2>
+      <h2 class="section-title">Everything your child needs<br><strong>to master money</strong></h2>
     </div>
     <div class="features-grid">
       <div class="feature-card fade-in">
@@ -115,7 +115,7 @@
   <section id="how-it-works" class="how-section">
     <div class="section-header fade-in">
       <div class="section-tag">Simple Steps</div>
-      <h2 class="section-title">Get started in minutes</h2>
+      <h2 class="section-title">Get started<br><strong>in minutes</strong></h2>
     </div>
     <div class="steps-grid">
       <div class="step-card fade-in">
@@ -144,23 +144,38 @@
   <!-- ── CTA ──────────────────────────────────────────────── -->
   <section class="cta-section fade-in">
     <div class="cta-box">
-      <div class="cta-emoji">🌱</div>
-      <h2>Ready to grow your future?</h2>
-      <p>Join thousands of kids already learning smart money habits with Fide.</p>
-      <a href="login.html" class="btn-primary">Get Started Free 🚀</a>
+      <h2>Ready to grow<br><strong>your future?</strong></h2>
+      <div class="cta-right">
+        <p>Join thousands of kids already learning smart money habits with Fide.</p>
+        <a href="login.html" class="btn-primary">Get Started Free →</a>
+      </div>
     </div>
   </section>
 
   <!-- ── Footer ───────────────────────────────────────────── -->
   <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-logo">🌱 fide</div>
-      <div class="footer-links">
-        <a href="#features">Features</a>
-        <a href="#how-it-works">How it works</a>
-        <a href="login.html">Sign In</a>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">FİDE</span>
+        <p>Empowering the next generation<br>with financial literacy skills.</p>
       </div>
-      <p class="footer-copy">© 2026 Fide — Learn Smart, Grow Safe 🌱</p>
+      <div class="footer-links-group">
+        <div class="footer-col">
+          <div class="footer-col-title">Product</div>
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="login.html">Sign In</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Learn</div>
+          <a href="#">Saving</a>
+          <a href="#">Earning</a>
+          <a href="#">Investing</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Fide — Learn Smart, Grow Safe 🌱</p>
     </div>
   </footer>
 
